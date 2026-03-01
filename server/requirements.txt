@@ -10,7 +10,8 @@ google-auth-oauthlib
 google-genai
 sqlalchemy
 alembic
-psycopg2-binary
+pymysql
+cryptography
 google-genai
 python-dotenv
 mcp
