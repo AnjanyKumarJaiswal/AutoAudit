@@ -97,7 +97,7 @@ export default function DashboardPage() {
         style={{
           maxWidth: 960,
           margin: "0 auto",
-          padding: "96px 24px 48px",
+          padding: "48px 24px 48px",
         }}
       >
         <div

@@ -157,7 +157,7 @@ export default function ReviewPage() {
   return (
     <>
       <Navbar />
-      <main style={{ maxWidth: 960, margin: "0 auto", padding: "96px 24px 48px" }}>
+      <main style={{ maxWidth: 960, margin: "0 auto", padding: "48px 24px 48px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24, fontSize: 14 }}>
           <Link href="/dashboard" style={{ color: "var(--color-text-muted)", textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}>
             <ArrowLeft size={14} /> Dashboard

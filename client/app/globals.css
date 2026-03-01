@@ -44,6 +44,8 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-left: var(--sidebar-width, 0px);
+  transition: padding-left 0.3s ease;
 }
 
 ::-webkit-scrollbar {
