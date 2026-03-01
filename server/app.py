@@ -37,6 +37,9 @@ migrate = Migrate(app, db)
 JWTManager(app)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+@app.route("/api/health",methods=["GET"])
+def server_health():
+    return {"status":200,"message":"Server is up and running"}
 
 @app.route("/api/auth/signup", methods=["POST"])
 def signup_route():
