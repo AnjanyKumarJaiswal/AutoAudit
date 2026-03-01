@@ -18,7 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`antialiased`}>
-        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "856342109288-4uiapt3o2dk9kq87cvkb4giv7j3cr0cb.apps.googleusercontent.com"}>
+        <GoogleOAuthProvider
+          clientId={
+            process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ||
+            "856342109288-4uiapt3o2dk9kq87cvkb4giv7j3cr0cb.apps.googleusercontent.com"
+          }
+        >
           <AuthProvider>
             {children}
             <Toaster

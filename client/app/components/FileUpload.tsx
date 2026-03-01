@@ -27,7 +27,7 @@ export default function FileUpload({
     (acceptedFiles: File[]) => {
       onFilesSelected(acceptedFiles);
     },
-    [onFilesSelected]
+    [onFilesSelected],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -58,18 +58,37 @@ export default function FileUpload({
         <Upload
           size={32}
           style={{
-            color: isDragActive ? "var(--color-accent)" : "var(--color-text-muted)",
+            color: isDragActive
+              ? "var(--color-accent)"
+              : "var(--color-text-muted)",
             marginBottom: 12,
           }}
         />
-        <p style={{ color: "var(--color-text-secondary)", fontSize: 14, marginBottom: 4 }}>
-          {isDragActive ? "Drop files here..." : "Drag & drop or click to upload"}
+        <p
+          style={{
+            color: "var(--color-text-secondary)",
+            fontSize: 14,
+            marginBottom: 4,
+          }}
+        >
+          {isDragActive
+            ? "Drop files here..."
+            : "Drag & drop or click to upload"}
         </p>
-        <p style={{ color: "var(--color-text-muted)", fontSize: 12 }}>{description}</p>
+        <p style={{ color: "var(--color-text-muted)", fontSize: 12 }}>
+          {description}
+        </p>
       </div>
 
       {selectedFiles.length > 0 && (
-        <div style={{ marginTop: 12, display: "flex", flexDirection: "column", gap: 8 }}>
+        <div
+          style={{
+            marginTop: 12,
+            display: "flex",
+            flexDirection: "column",
+            gap: 8,
+          }}
+        >
           {selectedFiles.map((file, index) => (
             <div
               key={index}
@@ -85,10 +104,14 @@ export default function FileUpload({
             >
               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                 <FileText size={16} style={{ color: "var(--color-accent)" }} />
-                <span style={{ fontSize: 13, color: "var(--color-text-primary)" }}>
+                <span
+                  style={{ fontSize: 13, color: "var(--color-text-primary)" }}
+                >
                   {file.name}
                 </span>
-                <span style={{ fontSize: 11, color: "var(--color-text-muted)" }}>
+                <span
+                  style={{ fontSize: 11, color: "var(--color-text-muted)" }}
+                >
                   ({(file.size / 1024).toFixed(1)} KB)
                 </span>
               </div>

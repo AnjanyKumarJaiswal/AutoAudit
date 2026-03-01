@@ -1,0 +1,1 @@
+FinGuard maintains a dedicated Security Operations Center (SOC) operating 24/7/365. In the event of a confirmed data breach, we follow a strict 72-hour notification window for all affected clients and relevant regulatory bodies. Our incident response team conducts "Post-Mortem" analyses within 5 business days of incident resolution to update our threat models.

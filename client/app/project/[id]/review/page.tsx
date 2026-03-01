@@ -52,7 +52,12 @@ export default function ReviewPage() {
   const projectId = Number(params.id);
 
   const [qaPairs, setQaPairs] = useState<QAPairData[]>([]);
-  const [coverage, setCoverage] = useState<Coverage>({ total: 0, answered: 0, not_found: 0, pending: 0 });
+  const [coverage, setCoverage] = useState<Coverage>({
+    total: 0,
+    answered: 0,
+    not_found: 0,
+    pending: 0,
+  });
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [versions, setVersions] = useState<Version[]>([]);
@@ -60,7 +65,7 @@ export default function ReviewPage() {
   const [projectName, setProjectName] = useState("");
 
   useEffect(() => {
-    if (!authLoading && !user) router.push("/login");
+    if (!authLoading && !user) router.push("/?auth=login");
   }, [user, authLoading, router]);
 
   useEffect(() => {
@@ -98,9 +103,13 @@ export default function ReviewPage() {
 
   const handleSaveEdit = async (qaId: number, newAnswer: string) => {
     try {
-      const res = await answersAPI.update(projectId, qaId, { ai_answer: newAnswer });
+      const res = await answersAPI.update(projectId, qaId, {
+        ai_answer: newAnswer,
+      });
       setQaPairs((prev) =>
-        prev.map((qa) => (qa.id === qaId ? { ...qa, ...res.data.qa_pair } : qa))
+        prev.map((qa) =>
+          qa.id === qaId ? { ...qa, ...res.data.qa_pair } : qa,
+        ),
       );
       toast.success("Answer updated");
     } catch {
@@ -148,7 +157,14 @@ export default function ReviewPage() {
 
   if (authLoading || loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
         <div className="spinner" style={{ width: 40, height: 40 }} />
       </div>
     );
@@ -157,19 +173,56 @@ export default function ReviewPage() {
   return (
     <>
       <Navbar />
-      <main style={{ maxWidth: 960, margin: "0 auto", padding: "48px 24px 48px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24, fontSize: 14 }}>
-          <Link href="/dashboard" style={{ color: "var(--color-text-muted)", textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}>
+      <main
+        style={{ maxWidth: 960, margin: "0 auto", padding: "48px 24px 48px" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 24,
+            fontSize: 14,
+          }}
+        >
+          <Link
+            href="/dashboard"
+            style={{
+              color: "var(--color-text-muted)",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
+            }}
+          >
             <ArrowLeft size={14} /> Dashboard
           </Link>
-          <ChevronRight size={14} style={{ color: "var(--color-text-muted)" }} />
-          <Link href={`/project/${projectId}`} style={{ color: "var(--color-text-muted)", textDecoration: "none" }}>
+          <ChevronRight
+            size={14}
+            style={{ color: "var(--color-text-muted)" }}
+          />
+          <Link
+            href={`/project/${projectId}`}
+            style={{ color: "var(--color-text-muted)", textDecoration: "none" }}
+          >
             {projectName || "Project"}
           </Link>
-          <ChevronRight size={14} style={{ color: "var(--color-text-muted)" }} />
-          <span style={{ color: "var(--color-text-primary)", fontWeight: 600 }}>Review</span>
+          <ChevronRight
+            size={14}
+            style={{ color: "var(--color-text-muted)" }}
+          />
+          <span style={{ color: "var(--color-text-primary)", fontWeight: 600 }}>
+            Review
+          </span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 24 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: 24,
+          }}
+        >
           <h1 style={{ fontSize: 28, fontWeight: 700 }}>Review Answers</h1>
           <div style={{ display: "flex", gap: 12 }}>
             {versions.length > 0 && (
@@ -197,7 +250,10 @@ export default function ReviewPage() {
             )}
 
             <Link href={`/project/${projectId}/versions`}>
-              <button className="btn-secondary" style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <button
+                className="btn-secondary"
+                style={{ display: "flex", alignItems: "center", gap: 6 }}
+              >
                 <History size={14} /> Versions
               </button>
             </Link>
@@ -208,37 +264,75 @@ export default function ReviewPage() {
               disabled={exporting}
               style={{ display: "flex", alignItems: "center", gap: 8 }}
             >
-              {exporting ? <span className="spinner" /> : <><Download size={16} /> Export DOCX</>}
+              {exporting ? (
+                <span className="spinner" />
+              ) : (
+                <>
+                  <Download size={16} /> Export DOCX
+                </>
+              )}
             </button>
           </div>
         </div>
-        <div className="glass-card" style={{ padding: "20px 24px", marginBottom: 24, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <div
+          className="glass-card"
+          style={{
+            padding: "20px 24px",
+            marginBottom: 24,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <AlertCircle size={16} style={{ color: "var(--color-text-muted)" }} />
-              <span style={{ fontSize: 14, fontWeight: 600 }}>Total: {coverage.total}</span>
+              <AlertCircle
+                size={16}
+                style={{ color: "var(--color-text-muted)" }}
+              />
+              <span style={{ fontSize: 14, fontWeight: 600 }}>
+                Total: {coverage.total}
+              </span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <CheckCircle size={16} style={{ color: "var(--color-success)" }} />
-              <span style={{ fontSize: 14, color: "var(--color-success)" }}>Answered: {coverage.answered}</span>
+              <CheckCircle
+                size={16}
+                style={{ color: "var(--color-success)" }}
+              />
+              <span style={{ fontSize: 14, color: "var(--color-success)" }}>
+                Answered: {coverage.answered}
+              </span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               <XCircle size={16} style={{ color: "var(--color-danger)" }} />
-              <span style={{ fontSize: 14, color: "var(--color-danger)" }}>Not Found: {coverage.not_found}</span>
+              <span style={{ fontSize: 14, color: "var(--color-danger)" }}>
+                Not Found: {coverage.not_found}
+              </span>
             </div>
             {coverage.pending > 0 && (
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 <Clock size={16} style={{ color: "var(--color-warning)" }} />
-                <span style={{ fontSize: 14, color: "var(--color-warning)" }}>Pending: {coverage.pending}</span>
+                <span style={{ fontSize: 14, color: "var(--color-warning)" }}>
+                  Pending: {coverage.pending}
+                </span>
               </div>
             )}
           </div>
-          <div style={{ width: 200, height: 8, background: "var(--color-bg-input)", borderRadius: 4, overflow: "hidden" }}>
+          <div
+            style={{
+              width: 200,
+              height: 8,
+              background: "var(--color-bg-input)",
+              borderRadius: 4,
+              overflow: "hidden",
+            }}
+          >
             <div
               style={{
                 height: "100%",
-                width: `${coverage.total > 0 ? ((coverage.answered / coverage.total) * 100) : 0}%`,
-                background: "linear-gradient(90deg, var(--color-success), var(--color-accent))",
+                width: `${coverage.total > 0 ? (coverage.answered / coverage.total) * 100 : 0}%`,
+                background:
+                  "linear-gradient(90deg, var(--color-success), var(--color-accent))",
                 borderRadius: 4,
                 transition: "width 0.5s ease",
               }}
@@ -246,9 +340,17 @@ export default function ReviewPage() {
           </div>
         </div>
         {qaPairs.length === 0 ? (
-          <div className="glass-card" style={{ padding: "60px 40px", textAlign: "center" }}>
-            <AlertCircle size={48} style={{ color: "var(--color-text-muted)", marginBottom: 16 }} />
-            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>No answers yet</h2>
+          <div
+            className="glass-card"
+            style={{ padding: "60px 40px", textAlign: "center" }}
+          >
+            <AlertCircle
+              size={48}
+              style={{ color: "var(--color-text-muted)", marginBottom: 16 }}
+            />
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>
+              No answers yet
+            </h2>
             <p style={{ color: "var(--color-text-secondary)", fontSize: 14 }}>
               Go back to the project page and generate answers first.
             </p>

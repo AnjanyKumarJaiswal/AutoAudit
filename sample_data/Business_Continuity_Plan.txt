@@ -1,0 +1,1 @@
+Our Business Continuity Plan (BCP) is tested semi-annually through tabletop exercises and live failover simulations. We maintain off-site, encrypted backups of all transaction data, which are tested for integrity every 30 days. Our primary data centers are Tier III equivalent facilities with redundant power and cooling.

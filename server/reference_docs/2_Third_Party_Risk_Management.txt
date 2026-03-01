@@ -1,0 +1,1 @@
+We conduct rigorous security assessments of all critical third-party vendors (Sub-processors). Vendors must provide their own SOC 2 Type II reports or equivalent certifications. We perform annual reviews of our primary cloud providers (AWS and GCP) to ensure continued compliance with our internal security standards.

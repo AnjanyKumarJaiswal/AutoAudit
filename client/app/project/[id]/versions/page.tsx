@@ -27,7 +27,7 @@ export default function VersionsPage() {
   const [projectName, setProjectName] = useState("");
 
   useEffect(() => {
-    if (!authLoading && !user) router.push("/login");
+    if (!authLoading && !user) router.push("/?auth=login");
   }, [user, authLoading, router]);
 
   useEffect(() => {
@@ -54,7 +54,14 @@ export default function VersionsPage() {
 
   if (authLoading || loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
         <div className="spinner" style={{ width: 40, height: 40 }} />
       </div>
     );
@@ -63,25 +70,65 @@ export default function VersionsPage() {
   return (
     <>
       <Navbar />
-      <main style={{ maxWidth: 960, margin: "0 auto", padding: "48px 24px 48px" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 24, fontSize: 14 }}>
-          <Link href="/dashboard" style={{ color: "var(--color-text-muted)", textDecoration: "none", display: "flex", alignItems: "center", gap: 4 }}>
+      <main
+        style={{ maxWidth: 960, margin: "0 auto", padding: "48px 24px 48px" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            marginBottom: 24,
+            fontSize: 14,
+          }}
+        >
+          <Link
+            href="/dashboard"
+            style={{
+              color: "var(--color-text-muted)",
+              textDecoration: "none",
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
+            }}
+          >
             <ArrowLeft size={14} /> Dashboard
           </Link>
-          <ChevronRight size={14} style={{ color: "var(--color-text-muted)" }} />
-          <Link href={`/project/${projectId}`} style={{ color: "var(--color-text-muted)", textDecoration: "none" }}>
+          <ChevronRight
+            size={14}
+            style={{ color: "var(--color-text-muted)" }}
+          />
+          <Link
+            href={`/project/${projectId}`}
+            style={{ color: "var(--color-text-muted)", textDecoration: "none" }}
+          >
             {projectName || "Project"}
           </Link>
-          <ChevronRight size={14} style={{ color: "var(--color-text-muted)" }} />
-          <span style={{ color: "var(--color-text-primary)", fontWeight: 600 }}>Version History</span>
+          <ChevronRight
+            size={14}
+            style={{ color: "var(--color-text-muted)" }}
+          />
+          <span style={{ color: "var(--color-text-primary)", fontWeight: 600 }}>
+            Version History
+          </span>
         </div>
 
-        <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 32 }}>Version History</h1>
+        <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 32 }}>
+          Version History
+        </h1>
 
         {versions.length === 0 ? (
-          <div className="glass-card" style={{ padding: "60px 40px", textAlign: "center" }}>
-            <Clock size={48} style={{ color: "var(--color-text-muted)", marginBottom: 16 }} />
-            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>No versions yet</h2>
+          <div
+            className="glass-card"
+            style={{ padding: "60px 40px", textAlign: "center" }}
+          >
+            <Clock
+              size={48}
+              style={{ color: "var(--color-text-muted)", marginBottom: 16 }}
+            />
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>
+              No versions yet
+            </h2>
             <p style={{ color: "var(--color-text-secondary)", fontSize: 14 }}>
               Versions are created each time you generate answers.
             </p>
@@ -100,7 +147,11 @@ export default function VersionsPage() {
                   cursor: "pointer",
                   animationDelay: `${index * 0.05}s`,
                 }}
-                onClick={() => router.push(`/project/${projectId}/review?version=${version.id}`)}
+                onClick={() =>
+                  router.push(
+                    `/project/${projectId}/review?version=${version.id}`,
+                  )
+                }
               >
                 <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                   <div
@@ -108,16 +159,19 @@ export default function VersionsPage() {
                       width: 40,
                       height: 40,
                       borderRadius: 10,
-                      background: index === 0
-                        ? "linear-gradient(135deg, var(--color-accent), #a855f7)"
-                        : "var(--color-bg-input)",
+                      background:
+                        index === 0
+                          ? "linear-gradient(135deg, var(--color-accent), #a855f7)"
+                          : "var(--color-bg-input)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       fontSize: 14,
                       fontWeight: 700,
-                      color: index === 0 ? "white" : "var(--color-text-secondary)",
-                      border: index === 0 ? "none" : "1px solid var(--color-border)",
+                      color:
+                        index === 0 ? "white" : "var(--color-text-secondary)",
+                      border:
+                        index === 0 ? "none" : "1px solid var(--color-border)",
                     }}
                   >
                     v{version.version_num}
@@ -126,17 +180,44 @@ export default function VersionsPage() {
                     <div style={{ fontSize: 15, fontWeight: 600 }}>
                       {version.label}
                       {index === 0 && (
-                        <span style={{ marginLeft: 8, fontSize: 11, color: "var(--color-accent)", fontWeight: 700 }}>
+                        <span
+                          style={{
+                            marginLeft: 8,
+                            fontSize: 11,
+                            color: "var(--color-accent)",
+                            fontWeight: 700,
+                          }}
+                        >
                           LATEST
                         </span>
                       )}
                     </div>
-                    <div style={{ display: "flex", gap: 16, fontSize: 12, color: "var(--color-text-muted)", marginTop: 4 }}>
-                      <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <div
+                      style={{
+                        display: "flex",
+                        gap: 16,
+                        fontSize: 12,
+                        color: "var(--color-text-muted)",
+                        marginTop: 4,
+                      }}
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 4,
+                        }}
+                      >
                         <Clock size={11} />
                         {new Date(version.created_at).toLocaleString()}
                       </span>
-                      <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                      <span
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 4,
+                        }}
+                      >
                         <FileText size={11} />
                         {version.qa_count} answers
                       </span>

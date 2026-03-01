@@ -1,0 +1,1 @@
+All FinGuard engineers must undergo mandatory security awareness training upon hire and annually thereafter. We enforce a "Least Privilege" access model. Code reviews are mandatory for all PRs (Pull Requests), and we utilize automated Static Application Security Testing (SAST) and Dynamic Application Security Testing (DAST) in our CI/CD pipelines.

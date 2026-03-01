@@ -1,7 +1,16 @@
 "use client";
 
 import { useAuth } from "./AuthProvider";
-import { Command, LogOut, LayoutDashboard, ChevronLeft, ChevronRight, Settings, Users, FolderOpen } from "lucide-react";
+import {
+  Command,
+  LogOut,
+  LayoutDashboard,
+  ChevronLeft,
+  ChevronRight,
+  Settings,
+  Users,
+  FolderOpen,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -13,8 +22,10 @@ export default function Navbar() {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   useEffect(() => {
-    // Dynamically adjust the body padding to match sidebar width
-    document.body.style.setProperty("--sidebar-width", isCollapsed ? "80px" : "260px");
+    document.body.style.setProperty(
+      "--sidebar-width",
+      isCollapsed ? "80px" : "260px",
+    );
   }, [isCollapsed]);
 
   if (!user) return null;
@@ -47,7 +58,6 @@ export default function Navbar() {
         transition: "width 0.3s ease",
       }}
     >
-      {/* Header & Logo Section */}
       <div
         style={{
           display: "flex",
@@ -76,22 +86,27 @@ export default function Navbar() {
               minWidth: "32px",
               height: "32px",
               borderRadius: "8px",
-              background: "linear-gradient(135deg, #a855f7, #6b21a8)",
+              background: "#ffffff",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Command size={18} color="white" />
+            <Command size={18} color="black" />
           </div>
           {!isCollapsed && (
-            <span style={{ fontSize: "16px", fontWeight: 700, letterSpacing: "-0.02em" }}>
+            <span
+              style={{
+                fontSize: "16px",
+                fontWeight: 700,
+                letterSpacing: "-0.02em",
+              }}
+            >
               AutoAudit
             </span>
           )}
         </Link>
 
-        {/* Collapse Toggle */}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           style={{
@@ -135,8 +150,17 @@ export default function Navbar() {
         </button>
       )}
 
-      {/* Navigation Links */}
-      <div style={{ flex: 1, padding: "24px 12px", display: "flex", flexDirection: "column", gap: "8px", overflowY: "auto", overflowX: "hidden" }}>
+      <div
+        style={{
+          flex: 1,
+          padding: "24px 12px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "8px",
+          overflowY: "auto",
+          overflowX: "hidden",
+        }}
+      >
         {NAV_LINKS.map((link) => {
           const isActive = pathname.startsWith(link.href);
           return (
@@ -151,7 +175,9 @@ export default function Navbar() {
                 padding: isCollapsed ? "12px 0" : "10px 12px",
                 borderRadius: "8px",
                 color: isActive ? "#ffffff" : "var(--color-text-secondary)",
-                background: isActive ? "rgba(255,255,255, 0.05)" : "transparent",
+                background: isActive
+                  ? "rgba(255,255,255, 0.05)"
+                  : "transparent",
                 textDecoration: "none",
                 fontSize: "14px",
                 fontWeight: 500,
@@ -161,16 +187,24 @@ export default function Navbar() {
               className="hover:bg-white/5 hover:text-white"
               title={isCollapsed ? link.name : undefined}
             >
-              <link.icon size={18} color={isActive ? "white" : "currentColor"} style={{ minWidth: "18px" }} />
+              <link.icon
+                size={18}
+                color={isActive ? "white" : "currentColor"}
+                style={{ minWidth: "18px" }}
+              />
               {!isCollapsed && <span>{link.name}</span>}
             </Link>
           );
         })}
       </div>
 
-      {/* Profile Section */}
-      <div style={{ padding: "12px", borderTop: "1px solid var(--color-border)", position: "relative" }}>
-        {/* Profile Popup Menu */}
+      <div
+        style={{
+          padding: "12px",
+          borderTop: "1px solid var(--color-border)",
+          position: "relative",
+        }}
+      >
         {showProfileMenu && (
           <div
             style={{
@@ -215,7 +249,6 @@ export default function Navbar() {
           </div>
         )}
 
-        {/* Profile Button */}
         <button
           onClick={() => setShowProfileMenu(!showProfileMenu)}
           style={{
@@ -224,7 +257,9 @@ export default function Navbar() {
             alignItems: "center",
             justifyContent: isCollapsed ? "center" : "flex-start",
             gap: "10px",
-            background: showProfileMenu ? "rgba(255,255,255,0.05)" : "transparent",
+            background: showProfileMenu
+              ? "rgba(255,255,255,0.05)"
+              : "transparent",
             border: "none",
             padding: isCollapsed ? "8px 0" : "8px 10px",
             borderRadius: "8px",
@@ -251,8 +286,8 @@ export default function Navbar() {
                 width: "36px",
                 height: "36px",
                 borderRadius: "50%",
-                background: "linear-gradient(135deg, #c084fc, #9333ea)",
-                color: "white",
+                background: "#ffffff",
+                color: "black",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -266,11 +301,37 @@ export default function Navbar() {
           )}
 
           {!isCollapsed && (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", overflow: "hidden" }}>
-              <span style={{ fontSize: "14px", fontWeight: 600, color: "var(--color-text-primary)", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden", maxWidth: "160px" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "flex-start",
+                overflow: "hidden",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "14px",
+                  fontWeight: 600,
+                  color: "var(--color-text-primary)",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  maxWidth: "160px",
+                }}
+              >
                 {displayName}
               </span>
-              <span style={{ fontSize: "12px", color: "var(--color-text-muted)", whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden", maxWidth: "160px" }}>
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "var(--color-text-muted)",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                  overflow: "hidden",
+                  maxWidth: "160px",
+                }}
+              >
                 {user.email}
               </span>
             </div>
@@ -278,7 +339,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Overlay for dismissing profile menu */}
       {showProfileMenu && (
         <div
           style={{ position: "fixed", inset: 0, zIndex: 90 }}

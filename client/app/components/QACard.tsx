@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Check, Edit3, RotateCcw, ChevronDown, ChevronUp, FileText } from "lucide-react";
+import {
+  Check,
+  Edit3,
+  RotateCcw,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+} from "lucide-react";
 
 interface Citation {
   doc: string;
@@ -55,11 +62,14 @@ export default function QACard({ qa, onSaveEdit, onRegenerate }: QACardProps) {
     qa.status === "answered"
       ? "badge badge-answered"
       : qa.status === "not_found"
-      ? "badge badge-not-found"
-      : "badge badge-pending";
+        ? "badge badge-not-found"
+        : "badge badge-pending";
 
   return (
-    <div className="glass-card fade-in" style={{ padding: "24px", marginBottom: 16 }}>
+    <div
+      className="glass-card fade-in"
+      style={{ padding: "24px", marginBottom: 16 }}
+    >
       <div
         style={{
           display: "flex",
@@ -68,13 +78,16 @@ export default function QACard({ qa, onSaveEdit, onRegenerate }: QACardProps) {
           marginBottom: 16,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 12, flex: 1 }}>
+        <div
+          style={{ display: "flex", alignItems: "center", gap: 12, flex: 1 }}
+        >
           <div
             style={{
               width: 32,
               height: 32,
               borderRadius: 8,
-              background: "linear-gradient(135deg, var(--color-accent), #a855f7)",
+              background:
+                "linear-gradient(135deg, var(--color-accent), #a855f7)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -97,7 +110,14 @@ export default function QACard({ qa, onSaveEdit, onRegenerate }: QACardProps) {
             {qa.original_question}
           </h3>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 8,
+            flexShrink: 0,
+          }}
+        >
           {qa.is_edited && (
             <span
               style={{
@@ -110,7 +130,11 @@ export default function QACard({ qa, onSaveEdit, onRegenerate }: QACardProps) {
             </span>
           )}
           <span className={statusBadgeClass}>
-            {qa.status === "answered" ? "✓ Answered" : qa.status === "not_found" ? "✗ Not Found" : "⏳ Pending"}
+            {qa.status === "answered"
+              ? "✓ Answered"
+              : qa.status === "not_found"
+                ? "✗ Not Found"
+                : "⏳ Pending"}
           </span>
         </div>
       </div>
@@ -144,23 +168,55 @@ export default function QACard({ qa, onSaveEdit, onRegenerate }: QACardProps) {
               }}
             />
             <div style={{ display: "flex", gap: 8, marginTop: 10 }}>
-              <button className="btn-glow" onClick={handleSave} disabled={saving} style={{ padding: "8px 20px", fontSize: 13 }}>
-                {saving ? <span className="spinner" /> : <><Check size={14} /> Save</>}
+              <button
+                className="btn-glow"
+                onClick={handleSave}
+                disabled={saving}
+                style={{ padding: "8px 20px", fontSize: 13 }}
+              >
+                {saving ? (
+                  <span className="spinner" />
+                ) : (
+                  <>
+                    <Check size={14} /> Save
+                  </>
+                )}
               </button>
-              <button className="btn-secondary" onClick={() => { setIsEditing(false); setEditedAnswer(qa.ai_answer || ""); }} style={{ padding: "8px 20px", fontSize: 13 }}>
+              <button
+                className="btn-secondary"
+                onClick={() => {
+                  setIsEditing(false);
+                  setEditedAnswer(qa.ai_answer || "");
+                }}
+                style={{ padding: "8px 20px", fontSize: 13 }}
+              >
                 Cancel
               </button>
             </div>
           </div>
         ) : (
-          <p style={{ fontSize: 14, lineHeight: 1.7, color: "var(--color-text-primary)" }}>
+          <p
+            style={{
+              fontSize: 14,
+              lineHeight: 1.7,
+              color: "var(--color-text-primary)",
+            }}
+          >
             {qa.ai_answer || "No answer yet."}
           </p>
         )}
       </div>
       {qa.citations && qa.citations.length > 0 && (
         <div style={{ marginBottom: 12 }}>
-          <span style={{ fontSize: 12, fontWeight: 600, color: "var(--color-text-secondary)", marginBottom: 6, display: "block" }}>
+          <span
+            style={{
+              fontSize: 12,
+              fontWeight: 600,
+              color: "var(--color-text-secondary)",
+              marginBottom: 6,
+              display: "block",
+            }}
+          >
             Citations
           </span>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
@@ -208,7 +264,14 @@ export default function QACard({ qa, onSaveEdit, onRegenerate }: QACardProps) {
             Evidence Snippets ({qa.evidence_snippets.length})
           </button>
           {showEvidence && (
-            <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+            <div
+              style={{
+                marginTop: 8,
+                display: "flex",
+                flexDirection: "column",
+                gap: 8,
+              }}
+            >
               {qa.evidence_snippets.map((ev, i) => (
                 <div
                   key={i}
@@ -232,7 +295,12 @@ export default function QACard({ qa, onSaveEdit, onRegenerate }: QACardProps) {
                   >
                     📄 {typeof ev === "string" ? "Document" : ev.doc}
                   </span>
-                  <span style={{ color: "var(--color-text-secondary)", fontStyle: "italic" }}>
+                  <span
+                    style={{
+                      color: "var(--color-text-secondary)",
+                      fontStyle: "italic",
+                    }}
+                  >
                     &ldquo;{typeof ev === "string" ? ev : ev.text}&rdquo;
                   </span>
                 </div>
@@ -254,7 +322,13 @@ export default function QACard({ qa, onSaveEdit, onRegenerate }: QACardProps) {
           <button
             className="btn-secondary"
             onClick={() => setIsEditing(true)}
-            style={{ padding: "6px 14px", fontSize: 12, display: "flex", alignItems: "center", gap: 4 }}
+            style={{
+              padding: "6px 14px",
+              fontSize: 12,
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
+            }}
           >
             <Edit3 size={12} /> Edit
           </button>
@@ -264,9 +338,21 @@ export default function QACard({ qa, onSaveEdit, onRegenerate }: QACardProps) {
             className="btn-secondary"
             onClick={handleRegenerate}
             disabled={regenerating}
-            style={{ padding: "6px 14px", fontSize: 12, display: "flex", alignItems: "center", gap: 4 }}
+            style={{
+              padding: "6px 14px",
+              fontSize: 12,
+              display: "flex",
+              alignItems: "center",
+              gap: 4,
+            }}
           >
-            {regenerating ? <span className="spinner" /> : <><RotateCcw size={12} /> Regenerate</>}
+            {regenerating ? (
+              <span className="spinner" />
+            ) : (
+              <>
+                <RotateCcw size={12} /> Regenerate
+              </>
+            )}
           </button>
         )}
       </div>

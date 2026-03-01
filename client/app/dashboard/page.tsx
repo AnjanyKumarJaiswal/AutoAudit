@@ -29,7 +29,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push("/login");
+      router.push("/?auth=login");
     }
   }, [user, authLoading, router]);
 
@@ -84,7 +84,14 @@ export default function DashboardPage() {
 
   if (authLoading || loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "100vh",
+        }}
+      >
         <div className="spinner" style={{ width: 40, height: 40 }} />
       </div>
     );
@@ -109,7 +116,9 @@ export default function DashboardPage() {
           }}
         >
           <div>
-            <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 4 }}>Your Audits</h1>
+            <h1 style={{ fontSize: 28, fontWeight: 700, marginBottom: 4 }}>
+              Your Audits
+            </h1>
             <p style={{ color: "var(--color-text-secondary)", fontSize: 14 }}>
               Manage your questionnaire audits and reviews
             </p>
@@ -123,7 +132,10 @@ export default function DashboardPage() {
           </button>
         </div>
         {showNewForm && (
-          <div className="glass-card fade-in" style={{ padding: 24, marginBottom: 24 }}>
+          <div
+            className="glass-card fade-in"
+            style={{ padding: 24, marginBottom: 24 }}
+          >
             <form onSubmit={createProject} style={{ display: "flex", gap: 12 }}>
               <input
                 className="input-field"
@@ -133,13 +145,21 @@ export default function DashboardPage() {
                 autoFocus
                 style={{ flex: 1 }}
               />
-              <button type="submit" className="btn-glow" disabled={creating} style={{ whiteSpace: "nowrap" }}>
+              <button
+                type="submit"
+                className="btn-glow"
+                disabled={creating}
+                style={{ whiteSpace: "nowrap" }}
+              >
                 {creating ? <span className="spinner" /> : "Create"}
               </button>
               <button
                 type="button"
                 className="btn-secondary"
-                onClick={() => { setShowNewForm(false); setNewName(""); }}
+                onClick={() => {
+                  setShowNewForm(false);
+                  setNewName("");
+                }}
               >
                 Cancel
               </button>
@@ -154,10 +174,22 @@ export default function DashboardPage() {
               textAlign: "center",
             }}
           >
-            <FolderOpen size={48} style={{ color: "var(--color-text-muted)", marginBottom: 16 }} />
-            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>No audits yet</h2>
-            <p style={{ color: "var(--color-text-secondary)", fontSize: 14, marginBottom: 24 }}>
-              Create your first audit to get started with AI-powered questionnaire answering.
+            <FolderOpen
+              size={48}
+              style={{ color: "var(--color-text-muted)", marginBottom: 16 }}
+            />
+            <h2 style={{ fontSize: 18, fontWeight: 600, marginBottom: 8 }}>
+              No audits yet
+            </h2>
+            <p
+              style={{
+                color: "var(--color-text-secondary)",
+                fontSize: 14,
+                marginBottom: 24,
+              }}
+            >
+              Create your first audit to get started with AI-powered
+              questionnaire answering.
             </p>
             <button
               className="btn-glow"
@@ -168,7 +200,13 @@ export default function DashboardPage() {
             </button>
           </div>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              gap: 16,
+            }}
+          >
             {projects.map((project) => (
               <div
                 key={project.id}
@@ -176,12 +214,38 @@ export default function DashboardPage() {
                 style={{ padding: 24, cursor: "pointer", position: "relative" }}
                 onClick={() => router.push(`/project/${project.id}`)}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
-                  <h3 style={{ fontSize: 16, fontWeight: 600, flex: 1, marginRight: 8 }}>{project.name}</h3>
-                  <span className={getStatusBadge(project.status)}>{project.status}</span>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    marginBottom: 16,
+                  }}
+                >
+                  <h3
+                    style={{
+                      fontSize: 16,
+                      fontWeight: 600,
+                      flex: 1,
+                      marginRight: 8,
+                    }}
+                  >
+                    {project.name}
+                  </h3>
+                  <span className={getStatusBadge(project.status)}>
+                    {project.status}
+                  </span>
                 </div>
 
-                <div style={{ display: "flex", gap: 16, marginBottom: 16, fontSize: 13, color: "var(--color-text-secondary)" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 16,
+                    marginBottom: 16,
+                    fontSize: 13,
+                    color: "var(--color-text-secondary)",
+                  }}
+                >
                   <span>{project.reference_doc_count} ref docs</span>
                   <span>{project.questionnaire_count} questionnaire</span>
                   <span>{project.version_count} versions</span>
@@ -196,19 +260,39 @@ export default function DashboardPage() {
                     borderTop: "1px solid var(--color-border)",
                   }}
                 >
-                  <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--color-text-muted)" }}>
+                  <span
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      fontSize: 12,
+                      color: "var(--color-text-muted)",
+                    }}
+                  >
                     <Clock size={12} />
                     {new Date(project.created_at).toLocaleDateString()}
                   </span>
                   <div style={{ display: "flex", gap: 8 }}>
                     <button
                       className="btn-secondary"
-                      onClick={(e) => { e.stopPropagation(); deleteProject(project.id); }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        deleteProject(project.id);
+                      }}
                       style={{ padding: "4px 10px", fontSize: 12 }}
                     >
                       <Trash2 size={12} />
                     </button>
-                    <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 13, color: "var(--color-accent)", fontWeight: 600 }}>
+                    <span
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 4,
+                        fontSize: 13,
+                        color: "var(--color-accent)",
+                        fontWeight: 600,
+                      }}
+                    >
                       Open <ArrowRight size={14} />
                     </span>
                   </div>

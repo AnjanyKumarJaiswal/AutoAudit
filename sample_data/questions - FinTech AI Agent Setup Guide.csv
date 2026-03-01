@@ -1,0 +1,11 @@
+Question ID,Question
+Q1,What encryption standard do you use for data at rest?
+Q2,Do you conduct annual penetration testing?
+Q3,Where is your customer data physically hosted?
+Q4,What is your guaranteed monthly uptime?
+Q5,How long do you retain audit logs?
+Q6,Do you have physical security guards at your data centers?
+Q7,What is your Recovery Time Objective (RTO)?
+Q8,Do you support multi-factor authentication for production access?
+Q9,Are you SOC 2 Type II compliant?
+Q10,Do you sell user data to marketing companies?

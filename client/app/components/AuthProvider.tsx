@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+} from "react";
 import { authAPI } from "@/lib/api";
 import { useRouter } from "next/navigation";
 
@@ -74,11 +80,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem("access_token");
     localStorage.removeItem("user");
     setUser(null);
-    router.push("/login");
+    router.push("/?auth=login");
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, loginWithGoogle, logout }}>
+    <AuthContext.Provider
+      value={{ user, loading, login, signup, loginWithGoogle, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
