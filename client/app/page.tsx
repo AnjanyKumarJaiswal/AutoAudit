@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import AuthModal from "./components/AuthModal";
 import { Command } from "lucide-react";
@@ -8,27 +8,12 @@ import { Command } from "lucide-react";
 function HomeContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
 
-  useEffect(() => {
-    const auth = searchParams.get("auth");
-    if (auth === "login") {
-      setAuthMode("login");
-      setIsAuthOpen(true);
-    } else if (auth === "signup") {
-      setAuthMode("signup");
-      setIsAuthOpen(true);
-    }
-  }, [searchParams]);
-
-  const openAuth = (mode: "login" | "signup") => {
-    setAuthMode(mode);
-    setIsAuthOpen(true);
-  };
+  const authParam = searchParams.get("auth");
+  const isAuthOpen = authParam === "login" || authParam === "signup";
+  const authMode: "login" | "signup" = authParam === "signup" ? "signup" : "login";
 
   const handleClose = () => {
-    setIsAuthOpen(false);
     const newParams = new URLSearchParams(searchParams.toString());
     newParams.delete("auth");
     const newPath =
@@ -92,7 +77,7 @@ function HomeContent() {
           }}
         >
           <button
-            onClick={() => openAuth("signup")}
+            onClick={() => router.push("/dashboard")}
             style={{
               backgroundColor: "#fff",
               color: "#000",
@@ -164,7 +149,7 @@ function HomeContent() {
           }}
         >
           <button
-            onClick={() => openAuth("signup")}
+            onClick={() => router.push("/dashboard")}
             style={{
               backgroundColor: "#fff",
               color: "#000",

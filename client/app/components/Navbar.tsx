@@ -7,9 +7,6 @@ import {
   LayoutDashboard,
   ChevronLeft,
   ChevronRight,
-  Settings,
-  Users,
-  FolderOpen,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,6 +23,9 @@ export default function Navbar() {
       "--sidebar-width",
       isCollapsed ? "80px" : "260px",
     );
+    return () => {
+      document.body.style.setProperty("--sidebar-width", "0px");
+    };
   }, [isCollapsed]);
 
   if (!user) return null;
