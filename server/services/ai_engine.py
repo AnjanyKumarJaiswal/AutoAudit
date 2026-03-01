@@ -3,7 +3,7 @@ from typing import List, Dict, Any
 from db import db
 from models.qa_pair import QAPair
 from models.reference_doc import ReferenceDoc
-from mcp.mcpClient import answer_question
+from mcp_agents.mcpClient import answer_question
 
 
 def generate_answers_for_project(

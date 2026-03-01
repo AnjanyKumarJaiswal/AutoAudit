@@ -1,31 +1,14 @@
-
 import re
+import json
+import asyncio
 from typing import List, Dict, Any
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+from mcp import types
+from mcp.server.lowlevel import Server
 
-TOOLS = [
-    {
-        "name": "search_company_docs",
-        "description": (
-            "Search through the company's uploaded reference documents to find "
-            "information relevant to a given query. Returns matching text snippets "
-            "with their source document names and relevance scores. Use this tool "
-            "to find specific information needed to answer questionnaire questions."
-        ),
-        "inputSchema": {
-            "type": "object",
-            "properties": {
-                "query": {
-                    "type": "string",
-                    "description": "The search query — use keywords or a natural language question to find relevant information in the reference documents.",
-                }
-            },
-            "required": ["query"],
-        },
-    }
-]
+app = Server("mcp-server")
 
 
 def _split_into_chunks(text: str, chunk_size: int = 200, overlap: int = 50) -> List[str]:
@@ -119,10 +102,51 @@ def _fallback_keyword_search(query: str, documents: List[Dict[str, str]], top_k:
     return results[:top_k]
 
 
-def handle_tool_call(tool_name: str, arguments: Dict[str, Any], context: Dict[str, Any]) -> Any:
-    if tool_name == "search_company_docs":
+@app.list_tools()
+async def list_tools() -> list[types.Tool]:
+    return [
+        types.Tool(
+            name="search_company_docs",
+            description=(
+                "Search through the company's uploaded reference documents to find "
+                "information relevant to a given query. Returns matching text snippets "
+                "with their source document names and relevance scores. Use this tool "
+                "to find specific information needed to answer questionnaire questions."
+            ),
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "query": {
+                        "type": "string",
+                        "description": "The search query — use keywords or a natural language question to find relevant information in the reference documents.",
+                    }
+                },
+                "required": ["query"],
+            },
+        )
+    ]
+
+
+@app.call_tool()
+async def call_tool(name: str, arguments: dict) -> list[types.TextContent]:
+    if name == "search_company_docs":
         query = arguments.get("query", "")
-        documents = context.get("documents", [])
-        return search_company_docs(query, documents)
+        documents = arguments.get("documents", [])
+        results = search_company_docs(query, documents)
+        return [types.TextContent(type="text", text=json.dumps(results))]
     else:
-        return {"error": f"Unknown tool: {tool_name}"}
+        raise ValueError(f"Unknown tool: {name}")
+
+
+if __name__ == "__main__":
+    from mcp.server.stdio import stdio_server
+    
+    async def main():
+        async with stdio_server() as (read_stream, write_stream):
+            await app.run(
+                read_stream,
+                write_stream,
+                app.create_initialization_options()
+            )
+
+    asyncio.run(main())
